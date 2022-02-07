@@ -55,7 +55,9 @@ namespace MobileConsole
 			textEditor.Copy();
 			Debug.Log("Log has been coppied to Clipboard");
 #elif UNITY_IOS || UNITY_ANDROID
-			NativeShare.Share(log);
+#if YASIRKULA_NATIVE_SHARE
+			new NativeShare().SetText(log).Share();
+#endif
 #endif
 		}
 
@@ -78,8 +80,11 @@ namespace MobileConsole
 #if UNITY_EDITOR || UNITY_STANDALONE
 			if (LogConsoleSettings.Instance.useShareLogViaMail)
 				ShareLogToEmailClient(logs);
+
 #elif UNITY_IOS || UNITY_ANDROID
-			NativeShare.ShareMultiple("", new string[] {filePath});
+#if YASIRKULA_NATIVE_SHARE
+			new NativeShare().AddFile(filePath).Share();
+#endif
 #endif
 
 #if UNITY_EDITOR
@@ -92,7 +97,15 @@ namespace MobileConsole
             if (filePaths == null || filePaths.Length == 0)
                 return;
 
-            NativeShare.ShareMultiple("", filePaths);
+#if YASIRKULA_NATIVE_SHARE
+            NativeShare filesShare = new NativeShare();
+            for (int i = 0; i < filePaths.Length; i++)
+            {
+	            filesShare.AddFile(filePaths[i]);
+            }
+
+            filesShare.Share();
+#endif
         }
 
 		static void ShareLogToEmailClient(string logs)

@@ -114,7 +114,15 @@ namespace MobileConsole
 
 			if (_filePaths.Length > 0)
 			{
-				NativeShare.ShareMultiple("", _filePaths);
+#if YASIRKULA_NATIVE_SHARE
+				NativeShare filesShare = new NativeShare();
+				for (int i = 0; i < _filePaths.Length; i++)
+				{
+					filesShare.AddFile(_filePaths[i]);
+				}
+
+				filesShare.Share();
+#endif
 			}
 		}
 

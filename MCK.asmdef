@@ -1,7 +1,8 @@
 {
     "name": "MCK",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "Unity.TextMeshPro",
+        "NativeShare.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -10,6 +11,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.yasirkula.nativeshare",
+            "expression": "",
+            "define": "YASIRKULA_NATIVE_SHARE"
+        }
+    ],
     "noEngineReferences": false
 }

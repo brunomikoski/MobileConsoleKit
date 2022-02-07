@@ -183,7 +183,9 @@ namespace MobileConsole
 				_sb.AppendLine();
 			}
 
-			NativeShare.Share(_sb.ToString());
+#if YASIRKULA_NATIVE_SHARE
+			new NativeShare().SetText(_sb.ToString()).Share();
+#endif
 		}
 	}
 }

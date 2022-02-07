@@ -176,8 +176,9 @@ namespace MobileConsole
 			{
 				sb.AppendFormat("{0}: {1}\n", kv.key, kv.value.ToString());
 			}
-
-			NativeShare.Share(sb.ToString());
+#if YASIRKULA_NATIVE_SHARE
+			new NativeShare().SetText(sb.ToString()).Share();
+#endif
 		}
 
 		void DrawUnsupportDotNetStandard20()

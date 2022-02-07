@@ -35,7 +35,9 @@ namespace MobileConsole
 
 		public void Share()
 		{
-			NativeShare.Share(_infoNode.name);
+#if YASIRKULA_NATIVE_SHARE
+			new NativeShare().SetText(_infoNode.name).Share();
+#endif
 		}
 	}
 }

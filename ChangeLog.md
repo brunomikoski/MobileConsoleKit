@@ -9,6 +9,10 @@
 - Various small bug fixes
 
 
+# v2.1.1
+## Improvements
+ - Removed the Native Share embeded with the package, and implemented support for the [Yasirkula Native Share](https://github.com/yasirkula/UnityNativeShare) package.
+ 
 # v2.0.4
 ## Improvements
 - [Share Log] When sharing a log on editor or standalone platform, the log will be copied to `Clipboard`. 
