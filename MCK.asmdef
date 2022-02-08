@@ -2,7 +2,8 @@
     "name": "MCK",
     "references": [
         "Unity.TextMeshPro",
-        "NativeShare.Runtime"
+        "NativeShare.Runtime",
+        "UnityNative.Sharing"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -16,6 +17,11 @@
             "name": "com.yasirkula.nativeshare",
             "expression": "",
             "define": "YASIRKULA_NATIVE_SHARE"
+        },
+        {
+            "name": "com.unitynative.sharing",
+            "expression": "",
+            "define": "PIXEPTION_NATIVE_SHARE"
         }
     ],
     "noEngineReferences": false

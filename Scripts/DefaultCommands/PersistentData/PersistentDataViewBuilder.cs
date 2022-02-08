@@ -112,18 +112,7 @@ namespace MobileConsole
 				_filePaths = Directory.GetFiles(Application.persistentDataPath, "*", SearchOption.AllDirectories);	
 			}
 
-			if (_filePaths.Length > 0)
-			{
-#if YASIRKULA_NATIVE_SHARE
-				NativeShare filesShare = new NativeShare();
-				for (int i = 0; i < _filePaths.Length; i++)
-				{
-					filesShare.AddFile(_filePaths[i]);
-				}
-
-				filesShare.Share();
-#endif
-			}
+			ShareBridge.ShareFiles(_filePaths);
 		}
 
 		protected override void OnCategoryToggled(GenericNodeView nodeView)

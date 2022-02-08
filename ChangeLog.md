@@ -8,6 +8,9 @@
 ## Fixes
 - Various small bug fixes
 
+# v2.1.2
+## Improvements
+- Added support for the [Nicholas Sheehan Native Share](https://github.com/NicholasSheehan/Unity-Native-Sharing) together with the [Yasirkula Native Share](https://github.com/yasirkula/UnityNativeShare) package.
 
 # v2.1.1
 ## Improvements

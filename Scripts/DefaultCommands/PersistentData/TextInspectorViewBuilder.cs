@@ -65,9 +65,7 @@ namespace MobileConsole
 
 		void ShareContent()
 		{
-#if YASIRKULA_NATIVE_SHARE
-			new NativeShare().SetText(_fileInfo.FullName).Share();
-#endif
+			ShareBridge.ShareText(_fileInfo.FullName);
 		}
 	}
 }

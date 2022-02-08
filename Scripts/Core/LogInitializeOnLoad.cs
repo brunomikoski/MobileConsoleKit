@@ -48,90 +48,18 @@ namespace MobileConsole
 
 		static void ShareLog(string log)
 		{
-#if UNITY_EDITOR || UNITY_STANDALONE
-			TextEditor textEditor = new TextEditor();
-			textEditor.text = log;
-			textEditor.SelectAll();
-			textEditor.Copy();
-			Debug.Log("Log has been coppied to Clipboard");
-#elif UNITY_IOS || UNITY_ANDROID
-#if YASIRKULA_NATIVE_SHARE
-			new NativeShare().SetText(log).Share();
-#endif
-#endif
+			ShareBridge.ShareText(log);
 		}
 
 		static void ShareAllLogs(string logs)
 		{
-			// Android intent limit size is 1MB (https://stackoverflow.com/questions/39098590)
-			// Thus we save it as a file then share the file instead
-			string fileName = string.Format("{0}_{1}({2})_{3}.log",
-				Application.productName,
-				Application.version,
-				EventBridge.AppVersionCode,
-				DateTime.Now.ToString("MMMM-dd_HH-mm-ss-ff"));
-			string folderPath = Path.Combine(Application.persistentDataPath, "MCK_Logs");
-			string filePath = Path.Combine(folderPath, fileName);
-
-			// Make sure the directory is created
-			Directory.CreateDirectory(folderPath);
-			File.WriteAllText(filePath, logs);
-
-#if UNITY_EDITOR || UNITY_STANDALONE
-			if (LogConsoleSettings.Instance.useShareLogViaMail)
-				ShareLogToEmailClient(logs);
-
-#elif UNITY_IOS || UNITY_ANDROID
-#if YASIRKULA_NATIVE_SHARE
-			new NativeShare().AddFile(filePath).Share();
-#endif
-#endif
-
-#if UNITY_EDITOR
-			Debug.LogFormat("Logs are saved at: {0}\n You can quickly open the log folder by <b>Tools > Mobile Console > Open Log Folder </b>", filePath);
-#endif
+			ShareBridge.ShareAllLogs(logs);
 		}
 
         static void ShareFiles(string[] filePaths)
         {
-            if (filePaths == null || filePaths.Length == 0)
-                return;
-
-#if YASIRKULA_NATIVE_SHARE
-            NativeShare filesShare = new NativeShare();
-            for (int i = 0; i < filePaths.Length; i++)
-            {
-	            filesShare.AddFile(filePaths[i]);
-            }
-
-            filesShare.Share();
-#endif
+	        ShareBridge.ShareFiles(filePaths);
         }
-
-		static void ShareLogToEmailClient(string logs)
-		{
-			string recipients = string.Empty;
-			if (LogConsoleSettings.Instance.mailRecipients != null)
-			{
-				recipients = string.Join(",", LogConsoleSettings.Instance.mailRecipients);
-			}
-
-			string fullUrl = string.Format(LogConsoleSettings.mailTemplate,
-									EscapeUrl(recipients),
-									EscapeUrl(LogConsoleSettings.Instance.mailSubject),
-									EscapeUrl(logs));
-			
-			Application.OpenURL(fullUrl);
-		}
-
-		static string EscapeUrl(string content)
-		{
-#if UNITY_2018_3_OR_NEWER
-			return UnityEngine.Networking.UnityWebRequest.EscapeURL(content).Replace("+", "%20");
-#else
-			return WWW.EscapeURL(content).Replace("+", "%20");
-#endif		
-		}
 
 		static float AllocatedMemory()
 		{
