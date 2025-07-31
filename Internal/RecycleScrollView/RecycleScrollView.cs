@@ -250,7 +250,7 @@ namespace MobileConsole.UI
 
 
 			// If viewContentSize > _viewportheight, OnScrollMoveDown will be called automatically
-			if (gameObject.activeInHierarchy && newViewContentSize < _viewportHeight)
+			if (gameObject != null && gameObject.activeInHierarchy && newViewContentSize < _viewportHeight)
 			{
 				if (IsCellInsideViewPort(cellInfo))
 				{
