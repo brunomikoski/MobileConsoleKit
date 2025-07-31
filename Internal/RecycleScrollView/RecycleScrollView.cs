@@ -492,21 +492,24 @@ namespace MobileConsole.UI
 
 			viewContentSize += (_cellInfos.Count - 1) * _spacing + _headerSpace + _footerSpace;
 
-			if (_scrollOrientation == ScrollOrientation.Vertical)
+			if (_viewContent != null)
 			{
-				_viewContent.sizeDelta = new Vector2(_viewContent.sizeDelta.x, viewContentSize);
-				if (viewContentSize < _viewportHeight)
+				if (_scrollOrientation == ScrollOrientation.Vertical)
 				{
-					MoveViewToTop(false);
+					_viewContent.sizeDelta = new Vector2(_viewContent.sizeDelta.x, viewContentSize);
+					if (viewContentSize < _viewportHeight)
+					{
+						MoveViewToTop(false);
+					}
+					else if (_viewContent.offsetMin.y + _viewportHeight > 1)
+					{
+						MoveViewToBottom(false);
+					}
 				}
-				else if (_viewContent.offsetMin.y + _viewportHeight > 1)
+				else if (_scrollOrientation == ScrollOrientation.Horizontal)
 				{
-					MoveViewToBottom(false);
+					_viewContent.sizeDelta = new Vector2(viewContentSize, 0);
 				}
-			}
-			else if (_scrollOrientation == ScrollOrientation.Horizontal)
-			{
-				_viewContent.sizeDelta = new Vector2(viewContentSize, 0);
 			}
 
 			return viewContentSize;
